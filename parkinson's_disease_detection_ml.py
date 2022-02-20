@@ -37,3 +37,28 @@ labels=df.loc[:, 'status'].values
 
 print(labels[labels==1].shape[0], labels[labels==0].shape[0])
 
+#Utlise the MinMaxScaler to scale the features to between -1 and 1 to normalize them
+# MinMaxScaler  transforms features by scaling them to a given range
+
+scaler= MinMaxScaler ((-1,1))
+x=scaler.fit_transform(features)
+y=labels
+
+#Split dataset into training and test
+#20% data is for testing
+
+x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=7)
+
+#Initializing the XGBClassified and training the model
+
+model = XGBClassifier()
+model.fit(x_train, y_train)
+
+#Generate y_pred which will be the preducted values for x_test
+
+y_pred = model.predict(x_test)
+
+#Calculate the accuracy
+
+print(accuracy_score(y_test, y_pred)* 100)
+
